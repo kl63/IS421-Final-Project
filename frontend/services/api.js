@@ -8,6 +8,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 60000, // Increase timeout to 60 seconds for long-running operations
 });
 
 export const reviewCode = async (data) => {
@@ -15,7 +16,7 @@ export const reviewCode = async (data) => {
     const response = await apiClient.post('/review', data);
     return response.data;
   } catch (error) {
-    console.error('Error in reviewCode:', error.response || error);
+    console.error('Error in reviewCode:', error.response?.data || error.message || error);
     throw error;
   }
 };
@@ -25,7 +26,7 @@ export const exportReview = async (reviewData) => {
     const response = await apiClient.post('/export-review', reviewData);
     return response.data;
   } catch (error) {
-    console.error('Error in exportReview:', error.response || error);
+    console.error('Error in exportReview:', error.response?.data || error.message || error);
     throw error;
   }
 };
